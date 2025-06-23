@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail-Inspired Library Management Dashboard</title>
+    <link rel="stylesheet" href="dash.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.344.0/lucide.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleSidebar()">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="logo">
+                    <i data-lucide="star" class="logo-icon"></i>
+                    <span class="logo-text">Library</span>
+                </div>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <i data-lucide="search" class="search-icon"></i>
+                    <input type="text" id="search-input" placeholder="Search requests, subjects, senders..." class="search-input">
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button class="icon-btn">
+                    <i data-lucide="settings"></i>
+                </button>
+                <button class="icon-btn">
+                    <i data-lucide="grid-3x3"></i>
+                </button>
+                <div class="user-avatar">K</div>
+            </div>
+        </header>
+
+        <div class="main-container">
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <div class="compose-section">
+                    <button class="compose-btn" onclick="showCompose()">
+                        <i data-lucide="plus"></i>
+                        <span class="compose-text">Compose</span>
+                    </button>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <button class="nav-item active" data-section="inbox" onclick="setActiveSection('inbox')">
+                        <i data-lucide="inbox"></i>
+                        <span class="nav-text">Inbox</span>
+                        <span class="nav-count">5</span>
+                    </button>
+                    <button class="nav-item" data-section="my-books" onclick="setActiveSection('my-books')">
+                        <i data-lucide="book-open"></i>
+                        <span class="nav-text">My Books</span>
+                        <span class="nav-count">3</span>
+                    </button>
+                    <button class="nav-item" data-section="starred" onclick="setActiveSection('starred')">
+                        <i data-lucide="star"></i>
+                        <span class="nav-text">Starred</span>
+                    </button>
+                    <button class="nav-item" data-section="requested" onclick="setActiveSection('requested')">
+                        <i data-lucide="clock"></i>
+                        <span class="nav-text">Requested</span>
+                        <span class="nav-count">1</span>
+                    </button>
+                    <button class="nav-item" data-section="overdue" onclick="setActiveSection('overdue')">
+                        <i data-lucide="alert-circle"></i>
+                        <span class="nav-text">Overdue</span>
+                        <span class="nav-count">1</span>
+                    </button>
+                    <button class="nav-item" data-section="returned" onclick="setActiveSection('returned')">
+                        <i data-lucide="check-circle"></i>
+                        <span class="nav-text">Returned</span>
+                    </button>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="storage-info">15 GB of 100 GB used</div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content-area">
+                <!-- Inbox View -->
+                <div class="view inbox-view active" id="inbox-view">
+                    <div class="inbox-container">
+                        <!-- Request List -->
+                        <div class="request-list">
+                            <!-- Toolbar -->
+                            <div class="toolbar">
+                                <div class="toolbar-left">
+                                    <input type="checkbox" class="select-all">
+                                    <button class="toolbar-btn">
+                                        <i data-lucide="archive"></i>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <i data-lucide="tag"></i>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <i data-lucide="more-vertical"></i>
+                                    </button>
+                                </div>
+                                <div class="toolbar-right">
+                                    <span class="item-count" id="request-count">1-5 of 5</span>
+                                </div>
+                            </div>
+
+                            <!-- Request Tabs -->
+                            <div class="tab-bar">
+                                <button class="tab active" data-tab="primary" onclick="setActiveTab('primary')">
+                                    <span>Primary</span>
+                                </button>
+                                <button class="tab" data-tab="book-requests" onclick="setActiveTab('book-requests')">
+                                    <span>Book Requests</span>
+                                    <span class="tab-count orange">2</span>
+                                </button>
+                                <button class="tab" data-tab="renewals" onclick="setActiveTab('renewals')">
+                                    <span>Renewals</span>
+                                    <span class="tab-count green">1</span>
+                                </button>
+                                <button class="tab" data-tab="inquiries" onclick="setActiveTab('inquiries')">
+                                    <span>Inquiries</span>
+                                    <span class="tab-count purple">2</span>
+                                </button>
+                            </div>
+
+                            <!-- Request Items -->
+                            <div class="request-items" id="request-items">
+                                <!-- Request items will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Request Detail Panel -->
+                        <div class="request-detail" id="request-detail">
+                            <div class="no-selection">
+                                <i data-lucide="mail" class="no-selection-icon"></i>
+                                <p class="no-selection-title">No request selected</p>
+                                <p class="no-selection-subtitle">Select a request to view details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Books View -->
+                <div class="view books-view" id="books-view">
+                    <div class="books-container">
+                        <!-- Books List -->
+                        <div class="books-list">
+                            <!-- Toolbar -->
+                            <div class="toolbar">
+                                <div class="toolbar-left">
+                                    <input type="checkbox" class="select-all">
+                                    <button class="toolbar-btn">
+                                        <i data-lucide="archive"></i>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <i data-lucide="trash-2"></i>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <i data-lucide="tag"></i>
+                                    </button>
+                                    <button class="toolbar-btn">
+                                        <i data-lucide="more-vertical"></i>
+                                    </button>
+                                </div>
+                                <div class="toolbar-right">
+                                    <span class="item-count" id="book-count">1-5 of 5</span>
+                                </div>
+                            </div>
+
+                            <!-- Book Tabs -->
+                            <div class="tab-bar">
+                                <button class="tab active" data-tab="all" onclick="setActiveTab('all')">
+                                    <span>All Books</span>
+                                </button>
+                                <button class="tab" data-tab="fiction" onclick="setActiveTab('fiction')">
+                                    <span>Fiction</span>
+                                    <span class="tab-count red">12</span>
+                                </button>
+                                <button class="tab" data-tab="science" onclick="setActiveTab('science')">
+                                    <span>Science</span>
+                                    <span class="tab-count red">8</span>
+                                </button>
+                                <button class="tab" data-tab="technology" onclick="setActiveTab('technology')">
+                                    <span>Technology</span>
+                                    <span class="tab-count red">15</span>
+                                </button>
+                            </div>
+
+                            <!-- Book Items -->
+                            <div class="book-items" id="book-items">
+                                <!-- Book items will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Book Detail Panel -->
+                        <div class="book-detail" id="book-detail">
+                            <div class="no-selection">
+                                <i data-lucide="book-open" class="no-selection-icon"></i>
+                                <p class="no-selection-title">No book selected</p>
+                                <p class="no-selection-subtitle">Select a book to view details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compose Modal -->
+        <div class="compose-modal" id="compose-modal">
+            <div class="compose-content">
+                <div class="compose-header">
+                    <h3>New Request</h3>
+                    <button class="close-btn" onclick="hideCompose()">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <form class="compose-form" onsubmit="handleComposeSubmit(event)">
+                    <div class="form-group">
+                        <label>From</label>
+                        <input type="email" value="student@university.edu" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>To</label>
+                        <input type="email" value="library@university.edu" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" id="compose-subject" placeholder="Enter subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="compose-message" placeholder="Type your message here..." rows="10" required></textarea>
+                    </div>
+                    <div class="compose-actions">
+                        <button type="submit" class="send-btn">
+                            <i data-lucide="send"></i>
+                            Send
+                        </button>
+                        <button type="button" class="cancel-btn" onclick="hideCompose()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay" id="mobile-overlay" onclick="closeMobileMenus()"></div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="dash.js"></script>
+</body>
+</html>

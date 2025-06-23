@@ -1,0 +1,37 @@
+# Book Library Management System
+
+## Description
+Victoria Falls Book Library Management System.
+
+## Setup Instructions
+
+1. **Clone the repository:**
+   ```
+   git clone https://github.com/kelthc23/Book-Library-Management-System.git
+   ```
+
+2. **Requirements:**
+   - PHP 7.x or 8.x
+   - MySQL/MariaDB
+   - XAMPP/LAMP/WAMP or similar local server
+
+3. **Database Setup:**
+   - Import the provided `Full db.sql` file into your MySQL server.
+   - Update `db_connect.php` with your database credentials.
+
+4. **Running the App:**
+   - Place the project folder in your web server’s root directory (e.g., `htdocs` for XAMPP).
+   - Start Apache and MySQL.
+   - Visit `http://localhost/Book Library Management` in your browser.
+
+## Design Decisions
+
+- **Frontend:** PHP, HTML, CSS, JS (no frameworks for simplicity).
+- **Backend:** PHP with MySQL.
+- **Authentication:** Session-based login for admin and members.
+- **Features:** Book lending, returns, fines, admin/member dashboards, and reports.
+
+## Notes
+
+- For any issues, please check your PHP and MySQL error logs.
+- Default admin/member credentials can be found in the database or ask your admin.
